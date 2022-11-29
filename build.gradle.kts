@@ -72,7 +72,7 @@ dependencies {
         isTransitive = false
     }
     //REI
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:$rei_version")
+    // modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin-forge:$rei_version")
     modImplementation("me.shedaniel:RoughlyEnoughItems-forge:$rei_version")
 
     modCompileOnly("dev.architectury:architectury-forge:$architectury_version")

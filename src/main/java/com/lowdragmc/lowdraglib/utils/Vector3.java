@@ -281,4 +281,11 @@ public class Vector3 {
         this.z = d2;
         return this;
     }
+
+    public double distanceTo(Vector3 vec) {
+        double dx = Math.pow(vec.x - this.x, 2);
+        double dy = Math.pow(vec.y - this.y, 2);
+        double dz = Math.pow(vec.z - this.z, 2);
+        return Math.sqrt(dx + dy + dz);
+    }
 }
