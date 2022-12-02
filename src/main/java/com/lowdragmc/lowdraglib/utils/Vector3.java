@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Contract;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -69,6 +70,7 @@ public class Vector3 {
         return new BlockPos(this.x, this.y, this.z);
     }
 
+    @Contract(pure = false)
     public Vector3 rotate(double angle, Vector3 axis) {
         Quat.aroundAxis(axis.copy().normalize(), angle).rotate(this);
         return this;
@@ -96,10 +98,12 @@ public class Vector3 {
         return tag;
     }
 
+    @Contract("->new")
     public Vector3f vector3f() {
         return new Vector3f((float)this.x, (float)this.y, (float)this.z);
     }
 
+    @Contract("->new")
     public Vector4f vector4f() {
         return new Vector4f((float)this.x, (float)this.y, (float)this.z, 1.0F);
     }
@@ -115,6 +119,7 @@ public class Vector3 {
         return this.set(vec.x, vec.y, vec.z);
     }
 
+    @Contract(pure = false)
     public Vector3 add(double dx, double dy, double dz) {
         this.x += dx;
         this.y += dy;
@@ -122,18 +127,22 @@ public class Vector3 {
         return this;
     }
 
+    @Contract(pure = false)
     public Vector3 add(double d) {
         return this.add(d, d, d);
     }
 
+    @Contract(pure = false)
     public Vector3 add(Vector3 vec) {
         return this.add(vec.x, vec.y, vec.z);
     }
 
+    @Contract(pure = false)
     public Vector3 add(BlockPos pos) {
         return this.add((double)pos.getX(), (double)pos.getY(), (double)pos.getZ());
     }
 
+    @Contract(pure = false)
     public Vector3 subtract(double dx, double dy, double dz) {
         this.x -= dx;
         this.y -= dy;
@@ -141,18 +150,22 @@ public class Vector3 {
         return this;
     }
 
+    @Contract(pure = false)
     public Vector3 subtract(double d) {
         return this.subtract(d, d, d);
     }
 
+    @Contract(pure = false)
     public Vector3 subtract(Vector3 vec) {
         return this.subtract(vec.x, vec.y, vec.z);
     }
 
+    @Contract(pure = false)
     public Vector3 subtract(BlockPos pos) {
         return this.subtract((double)pos.getX(), (double)pos.getY(), (double)pos.getZ());
     }
 
+    @Contract(pure = false)
     public Vector3 multiply(double fx, double fy, double fz) {
         this.x *= fx;
         this.y *= fy;
@@ -160,14 +173,17 @@ public class Vector3 {
         return this;
     }
 
+    @Contract(pure = false)
     public Vector3 multiply(double f) {
         return this.multiply(f, f, f);
     }
 
+    @Contract(pure = false)
     public Vector3 multiply(Vector3 f) {
         return this.multiply(f.x, f.y, f.z);
     }
 
+    @Contract(pure = false)
     public Vector3 divide(double fx, double fy, double fz) {
         this.x /= fx;
         this.y /= fy;
@@ -175,24 +191,30 @@ public class Vector3 {
         return this;
     }
 
+    @Contract(pure = false)
     public Vector3 divide(double f) {
         return this.divide(f, f, f);
     }
 
+    @Contract(pure = false)
     public Vector3 divide(Vector3 vec) {
         return this.divide(vec.x, vec.y, vec.z);
     }
 
+    @Contract(pure = false)
     public Vector3 divide(BlockPos pos) {
         return this.divide((double)pos.getX(), (double)pos.getY(), (double)pos.getZ());
     }
 
+    @Contract(pure = false)
     public Vector3 floor() {
         this.x = Math.floor(this.x);
         this.y = Math.floor(this.y);
         this.z = Math.floor(this.z);
         return this;
     }
+
+    @Contract(pure = false)
 
     public Vector3 ceil() {
         this.x = Math.ceil(this.x);
@@ -244,6 +266,7 @@ public class Vector3 {
         return min <= value && value <= max;
     }
 
+    @Contract(pure = true, value = "->new")
     public Vector3 copy() {
         return new Vector3(this);
     }
@@ -253,6 +276,7 @@ public class Vector3 {
         return "Vector3(" + new BigDecimal(this.x, cont) + ", " + new BigDecimal(this.y, cont) + ", " + new BigDecimal(this.z, cont) + ")";
     }
 
+    @Contract(pure = false)
     public Vector3 normalize() {
         double d = mag();
         if (d != 0) {
@@ -261,6 +285,7 @@ public class Vector3 {
         return this;
     }
 
+    @Contract(pure = false)
     public Vector3 project(Vector3 b) {
         double l = b.magSquared();
         if (l == 0.0D) {
@@ -272,6 +297,7 @@ public class Vector3 {
         return this;
     }
 
+    @Contract(pure = false)
     public Vector3 crossProduct(Vector3 vec) {
         double d = this.y * vec.z - this.z * vec.y;
         double d1 = this.z * vec.x - this.x * vec.z;
@@ -280,5 +306,12 @@ public class Vector3 {
         this.y = d1;
         this.z = d2;
         return this;
+    }
+
+    public double distanceTo(Vector3 vec) {
+        double dx = Math.pow(vec.x - this.x, 2);
+        double dy = Math.pow(vec.y - this.y, 2);
+        double dz = Math.pow(vec.z - this.z, 2);
+        return Math.sqrt(dx + dy + dz);
     }
 }
